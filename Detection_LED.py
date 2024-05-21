@@ -13,7 +13,7 @@ aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_100)
 parameters = cv2.aruco.DetectorParameters()
 
 # Set up the GPIO pin for the LED
-LED_PIN = 3
+LED_PIN = 3 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(LED_PIN, GPIO.OUT)
 
@@ -45,11 +45,11 @@ while True:
         distance = np.linalg.norm(frame_center - marker_center)
         
         # If the distance is below a certain threshold, turn on the LED
-        if distance < 50:
+        if distance < 30:
             GPIO.output(LED_PIN, GPIO.HIGH)
         else:
             GPIO.output(LED_PIN, GPIO.LOW)
-    
+        
     # Display the resulting frame
     cv2.imshow('Frame with ArUco markers', frame)
     

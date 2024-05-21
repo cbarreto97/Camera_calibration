@@ -51,15 +51,15 @@ while True:
         displacements = [np.linalg.norm(frame_center - midpoint) for midpoint in midpoints]
         
         # Print the displacement and direction of each side
-        for i, displacement in enumerate(displacements):
-            print(f"Side {i+1} is displaced by {displacement} units towards the direction of its midpoint.")
+       # for i, displacement in enumerate(displacements):
+       #     print(f"Side {i+1} is displaced by {displacement} units towards the direction of its midpoint.")
         
         # Draw lines from the center of the frame to the midpoint of each side
         for midpoint in midpoints:
             cv2.line(frame, tuple(frame_center.astype(int)), tuple(midpoint.astype(int)), (0, 255, 0), 2)
         
         # If the distance is below a certain threshold, turn on the LED
-        if distance < 50:
+        if distance < 30:
             GPIO.output(LED_PIN, GPIO.HIGH)
         else:
             GPIO.output(LED_PIN, GPIO.LOW)

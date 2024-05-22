@@ -47,19 +47,22 @@ while True:
         # Calculate the midpoints of each side of the ArUco marker
         midpoints = [(corners[0][0][i] + corners[0][0][(i+1)%4]) / 2 for i in range(4)]
         
+        for midpoint in midpoints:
+            cv2.arrowedLine(frame, tuple(frame_center.astype(int)), tuple(midpoint.astype(int)), (0, 255, 0), 2)
+        
         # Calculate the displacement of each side of the ArUco marker
-        displacements = [np.linalg.norm(frame_center - midpoint) for midpoint in midpoints]
+        #displacements = [np.linalg.norm(frame_center - midpoint) for midpoint in midpoints]
         
         # Print the displacement and direction of each side
        # for i, displacement in enumerate(displacements):
        #     print(f"Side {i+1} is displaced by {displacement} units towards the direction of its midpoint.")
         
         # Draw lines from the center of the frame to the midpoint of each side
-        for midpoint in midpoints:
-            cv2.line(frame, tuple(frame_center.astype(int)), tuple(midpoint.astype(int)), (0, 255, 0), 2)
+        #for midpoint in midpoints:
+         #   cv2.line(frame, tuple(frame_center.astype(int)), tuple(midpoint.astype(int)), (0, 255, 0), 2)
         
         # If the distance is below a certain threshold, turn on the LED
-        if distance < 30:
+        if distance < 25:
             GPIO.output(LED_PIN, GPIO.HIGH)
         else:
             GPIO.output(LED_PIN, GPIO.LOW)

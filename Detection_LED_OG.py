@@ -17,10 +17,6 @@ LED_PIN = 3
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(LED_PIN, GPIO.OUT)
 
-# Camera calibration parameters
-camera_matrix = np.array([[1.39738870e+03, 0, 7.09700723e+02], [0, 1.08480951e+03, 5.04363018e+02], [0, 0, 1]])  # Replace fx, fy, cx, cy with your values
-dist_coeffs = np.array([-0.30538482,  0.54474872, 0.12218095,  0.04989102, -0.24468923])  # Replace with your values if you have them
-
 while True:
     # Capture frame-by-frame
     ret, frame = cap.read()
@@ -42,21 +38,24 @@ while True:
         # Calculate the center of the frame
         frame_center = np.array([frame.shape[1] / 2, frame.shape[0] / 2])
         
+        # Calculate the center of the ArUco marker
+        marker_center = np.mean(corners[0][0], axis=0)
+        
+        # Calculate the distance from the center of the frame to the center of the ArUco marker
+        distance = np.linalg.norm(frame_center - marker_center)
+        
         # Calculate the midpoints of each side of the ArUco marker
         midpoints = [(corners[0][0][i] + corners[0][0][(i+1)%4]) / 2 for i in range(4)]
         
-        # Draw displacement vectors from the center of the frame to the midpoint of each side
         for midpoint in midpoints:
             cv2.arrowedLine(frame, tuple(frame_center.astype(int)), tuple(midpoint.astype(int)), (0, 255, 0), 2)
         
-        # Estimate the pose of the ArUco marker
-        marker_size = 121.7 #mm
-        rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, marker_size, camera_matrix, dist_coeffs)  # Replace marker_size with your value
-        
-        # Draw the axes on the ArUco marker
-        for i in range(len(ids)):
-            cv2.drawFrameAxes(frame, camera_matrix, dist_coeffs, rvecs[i], tvecs[i], 25.0)  # The last parameter is the length of the axes
-        
+        # If the distance is below a certain threshold, turn on the LED
+        if distance < 25:
+            GPIO.output(LED_PIN, GPIO.HIGH)
+        else:
+            GPIO.output(LED_PIN, GPIO.LOW)
+    
     # Display the resulting frame
     cv2.imshow('Frame with ArUco markers', frame)
     

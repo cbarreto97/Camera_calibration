@@ -51,7 +51,7 @@ while True:
             cv2.arrowedLine(frame, tuple(frame_center.astype(int)), tuple(midpoint.astype(int)), (0, 255, 0), 2)
         
         # If the distance is below a certain threshold, turn on the LED
-        if distance < 25:
+        if distance < 30:
             GPIO.output(LED_PIN, GPIO.HIGH)
         else:
             GPIO.output(LED_PIN, GPIO.LOW)

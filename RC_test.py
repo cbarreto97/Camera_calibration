@@ -5,7 +5,7 @@ import time
 GPIO.setmode(GPIO.BCM)
 
 # Define the pin connected to the R8EF receiver
-receiver_pin = 7
+receiver_pin = 13
 
 # Set up the GPIO pin
 GPIO.setup(receiver_pin, GPIO.IN)
@@ -28,7 +28,7 @@ try:
     # Loop to read the signals
     while True:
         pulse_width = measure_pulse_width(receiver_pin)
-        print(f"Pulse width: {pulse_width} seconds")
+        print(f"Pulse width: {pulse_width:.4f} seconds")
         time.sleep(0.1)
 except KeyboardInterrupt:
     # Clean up the GPIO pins

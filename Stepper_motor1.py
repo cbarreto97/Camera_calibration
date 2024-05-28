@@ -62,7 +62,7 @@ pi = pigpio.pi('192.168.0.14', 8888)
 pin = 13  # Replace with your GPIO pin number
 
 # Set up servo pulse width
-set_pulse_width = pi.set_servo_pulsewidth(pin, 1500)  # Set pulse width to 1500 microseconds
+set_pulse_width = pi.set_servo_pulsewidth(pin, 17000)  # Set pulse width to ## microseconds
 # Now you can get the servo pulse width
 pulse_width = pi.get_servo_pulsewidth(pin)
 

@@ -6,7 +6,7 @@ import RPi.GPIO as GPIO  # Import the RPi.GPIO library
 # Initialize the video capture object
 cap = cv2.VideoCapture(0)
 
-# Define the dictionary of ArUco markers we're using
+# Define the dictionary of ArUco markers we're usin]
 aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_100)
 
 # Define the parameters for the ArUco marker detection
@@ -51,7 +51,7 @@ while True:
             cv2.arrowedLine(frame, tuple(frame_center.astype(int)), tuple(midpoint.astype(int)), (0, 255, 0), 2)
         
         # If the distance is below a certain threshold, turn on the LED
-        if distance < 30:
+        if distance < 25:
             GPIO.output(LED_PIN, GPIO.HIGH)
         else:
             GPIO.output(LED_PIN, GPIO.LOW)
